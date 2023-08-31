@@ -1,5 +1,11 @@
-const lib = require('./lib.js')
-const express = require('express');
+const http = require('http');
+const data = { age : 5};
+const server = http.createServer((req, res) => {
+    console.log(req.url);
+    console.log('server started');
+    res.setHeader('Dummy', 'DummyValue');
+    res.setHeader('Content-Type', 'text/html');
+    res.end('hello')
+});
 
-const server = express();
-server.listen(8080);
+server.listen(8080)
