@@ -1,3 +1,5 @@
-import {sum, diff} from './lib.js'
+const lib = require('./lib.js')
+const express = require('express');
 
-console.log(sum(4,5), diff(9,6))
+const server = express();
+server.listen(8080);
