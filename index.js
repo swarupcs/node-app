@@ -1,14 +1,20 @@
-const http = require('http');
 const fs = require('fs');
 
 const index = fs.readFileSync('index.html','utf-8');
-const data = { age : 5};
-const server = http.createServer((req, res) => {
-    console.log(req.url);
-    console.log('server started');
-    res.setHeader('Dummy', 'DummyValue');
-    res.setHeader('Content-Type', 'text/html');
-    res.end(index)
-});
+const data = JSON.parse(fs.readFileSync('data.json', 'utf-8'));
+const products = data.products;
 
-server.listen(8080)
+
+const express = require('express')
+const server = express()
+
+server.get('/', (req,res)=> {
+    // res.send('<h1>hello</h1>')
+    // res.sendFile("F:\Tutorials\NodeJs\CoderDost\node-app\index.html")
+    // res.json(products)
+    res.sendStatus(404);
+})
+
+server.listen(8080, ()=> {
+    console.log("Server started");
+})
