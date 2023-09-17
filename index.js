@@ -33,6 +33,13 @@ server.get('/products',  (req,res)=> {
     res.json(products);
 })
 
+//Create API  => POST /products
+server.post('/products', (req,res)=> {
+    console.log(req.body);      //body parser important
+    products.push(req.body);
+    res.status(201).json(req.body);
+})
+
 // Read GET /products/:id
 server.get('/products/:id',  (req,res)=> {
     // console.log(req.params.id);
@@ -41,13 +48,17 @@ server.get('/products/:id',  (req,res)=> {
     res.json(product);
 })
 
+// Update PUT /products/:id
+server.put('/products/:id',  (req,res)=> {
+    // console.log(req.params.id);
+    const id = +req.params.id;
+    const productIndex = products.findIndex(p=>p.id === id)
+    products.splice(productIndex,1,{...req.body, id:id})
+    res.status(201).json();
+})
 
-server.post('/', (req,res)=> {
-    res.json({type:'POST'})
-})
-server.put('/', (req,res)=> {
-    res.json({type:'PUT'})
-})
+
+
 server.delete('/', (req,res)=> {
     res.json({type:'DELETE'})
 })
