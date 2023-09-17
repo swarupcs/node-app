@@ -23,11 +23,11 @@ const auth = (req, res, next) => {
     }
 }
 
-server.use(auth);
+// server.use(auth);
 
 
 // API - Endpoint - Route
-server.get('/', (req,res)=> {
+server.get('/', auth, (req,res)=> {
     res.json({type:'GET'})
 })
 server.post('/', (req,res)=> {
