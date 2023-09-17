@@ -13,6 +13,18 @@ server.use((req,res,next) => {
     next();         
 })
 
+const auth = (req, res, next) => {
+    console.log(req.query);
+    if(req.query.password=='123') {
+
+        next();
+    } else{
+        res.sendStatus(401);
+    }
+}
+
+server.use(auth);
+
 
 // API - Endpoint - Route
 server.get('/', (req,res)=> {
