@@ -6,7 +6,11 @@ const products = data.products;
 
 
 const express = require('express')
-const server = express()
+const server = express();
+
+//bodyParser
+server.use(express.json());
+// server.use(express.urlencoded());
 
 server.use((req,res,next) => {
     console.log(req.method, req.ip, req.hostname, new Date(),req.get('User-Agent')); //logger
@@ -14,9 +18,8 @@ server.use((req,res,next) => {
 })
 
 const auth = (req, res, next) => {
-    console.log(req.query);
-    if(req.query.password=='123') {
-
+    // console.log(req.query);
+    if(req.body.password=='123') {
         next();
     } else{
         res.sendStatus(401);
@@ -30,7 +33,7 @@ const auth = (req, res, next) => {
 server.get('/', auth, (req,res)=> {
     res.json({type:'GET'})
 })
-server.post('/', (req,res)=> {
+server.post('/', auth, (req,res)=> {
     res.json({type:'POST'})
 })
 server.put('/', (req,res)=> {
