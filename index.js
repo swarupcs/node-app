@@ -5,19 +5,21 @@ const data = JSON.parse(fs.readFileSync('data.json', 'utf-8'));
 const products = data.products;
 
 
-const express = require('express')
+const express = require('express');
+const morgan = require('morgan');
 const server = express();
 
 //bodyParser
 server.use(express.json());
 // server.use(express.urlencoded());
+server.use(morgan('default'));
 
 server.use(express.static('public'));
 
-server.use((req,res,next) => {
-    console.log(req.method, req.ip, req.hostname, new Date(),req.get('User-Agent')); //logger
-    next();         
-})
+// server.use((req,res,next) => {
+//     console.log(req.method, req.ip, req.hostname, new Date(),req.get('User-Agent')); //logger
+//     next();         
+// })
 
 const auth = (req, res, next) => {
     // console.log(req.query);
