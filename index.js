@@ -8,6 +8,24 @@ const products = data.products;
 const express = require('express')
 const server = express()
 
+// API - Endpoint - Route
+server.get('/', (req,res)=> {
+    res.json({type:'GET'})
+})
+server.post('/', (req,res)=> {
+    res.json({type:'POST'})
+})
+server.put('/', (req,res)=> {
+    res.json({type:'PUT'})
+})
+server.delete('/', (req,res)=> {
+    res.json({type:'DELETE'})
+})
+server.patch('/', (req,res)=> {
+    res.json({type:'PATCH'})
+})
+
+
 server.get('/', (req,res)=> {
     // res.send('<h1>hello</h1>')
     // res.sendFile("F:\Tutorials\NodeJs\CoderDost\node-app\index.html")
@@ -18,3 +36,6 @@ server.get('/', (req,res)=> {
 server.listen(8080, ()=> {
     console.log("Server started");
 })
+
+
+// 2:20:14
