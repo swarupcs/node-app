@@ -16,30 +16,33 @@ server.use(morgan('default'));
 
 server.use(express.static('public'));
 
-// server.use((req,res,next) => {
-//     console.log(req.method, req.ip, req.hostname, new Date(),req.get('User-Agent')); //logger
-//     next();         
-// })
 
-const auth = (req, res, next) => {
-    // console.log(req.query);
-    // if(req.body.password=='123') {
-    //     next();
-    // } else{
-    //     res.sendStatus(401);
-    // }
-    next();
-}
+
+
 
 // server.use(auth);
 
 
 // API - Endpoint - Route
-server.get('/product/:id', auth, (req,res)=> {
-    console.log(req.params)
-    res.json({type:'GET'})
+
+//Products
+//API ROOT , base URL, example - google.com/api/v2/
+
+// Read GET /products
+server.get('/products',  (req,res)=> {
+    res.json(products);
 })
-server.post('/', auth, (req,res)=> {
+
+// Read GET /products/:id
+server.get('/products/:id',  (req,res)=> {
+    // console.log(req.params.id);
+    const id = +req.params.id;
+    const product = products.find(p=>p.id === id)
+    res.json(product);
+})
+
+
+server.post('/', (req,res)=> {
     res.json({type:'POST'})
 })
 server.put('/', (req,res)=> {
