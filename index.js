@@ -17,8 +17,48 @@ server.use(morgan('default'));
 server.use(express.static('public'));
 
 
+//MVC  model-view-controller
+const createProduct = (req,res)=> {
+    console.log(req.body);      //body parser important
+    products.push(req.body);
+    res.status(201).json(req.body);
+}
+
+const getAllProducts = (req,res)=> {
+    res.json(products);
+}
+
+const getProduct = (req,res)=> {
+    // console.log(req.params.id);
+    const id = +req.params.id;
+    const product = products.find(p=>p.id === id)
+    res.json(product);
+}
+
+const replaceProduct = (req,res)=> {
+    // console.log(req.params.id);
+    const id = +req.params.id;
+    const productIndex = products.findIndex(p=>p.id === id)
+    products.splice(productIndex,1,{...req.body, id:id})
+    res.status(201).json();
+}
+
+const updateProduct = (req,res)=> {
+    const id = +req.params.id;
+    const productIndex = products.findIndex(p=>p.id === id)
+    const product = products[productIndex]
+    products.splice(productIndex,1,{...product,...req.body})
+    res.status(201).json();
+}
 
 
+const deleteProduct = (req,res)=> {
+    const id = +req.params.id;
+    const productIndex = products.findIndex(p=>p.id === id)
+    const product = products[productIndex]
+    products.splice(productIndex,1)
+    res.status(201).json(product);
+}
 
 // server.use(auth);
 
@@ -29,51 +69,22 @@ server.use(express.static('public'));
 //API ROOT , base URL, example - google.com/api/v2/
 
 // Read GET /products
-server.get('/products',  (req,res)=> {
-    res.json(products);
-})
+server.get('/products', getAllProducts );
 
 //Create API  => POST /products
-server.post('/products', (req,res)=> {
-    console.log(req.body);      //body parser important
-    products.push(req.body);
-    res.status(201).json(req.body);
-})
+server.post('/products', createProduct );
 
 // Read GET /products/:id
-server.get('/products/:id',  (req,res)=> {
-    // console.log(req.params.id);
-    const id = +req.params.id;
-    const product = products.find(p=>p.id === id)
-    res.json(product);
-})
+server.get('/products/:id', getProduct )
 
 // Update PUT /products/:id
-server.put('/products/:id',  (req,res)=> {
-    // console.log(req.params.id);
-    const id = +req.params.id;
-    const productIndex = products.findIndex(p=>p.id === id)
-    products.splice(productIndex,1,{...req.body, id:id})
-    res.status(201).json();
-})
+server.put('/products/:id', replaceProduct )
 
 // Update PATCH /products/:id
-server.patch('/products/:id', (req,res)=> {
-    const id = +req.params.id;
-    const productIndex = products.findIndex(p=>p.id === id)
-    const product = products[productIndex]
-    products.splice(productIndex,1,{...product,...req.body})
-    res.status(201).json();
-})
+server.patch('/products/:id', updateProduct)
 
 // Update DELETE /products/:id
-server.delete('/products/:id', (req,res)=> {
-    const id = +req.params.id;
-    const productIndex = products.findIndex(p=>p.id === id)
-    const product = products[productIndex]
-    products.splice(productIndex,1)
-    res.status(201).json(product);
-})
+server.delete('/products/:id', deleteProduct)
 
 
 
