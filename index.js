@@ -8,6 +8,12 @@ const products = data.products;
 const express = require('express')
 const server = express()
 
+server.use((req,res,next) => {
+    console.log(req.method, req.ip, req.hostname);
+    next();         //logger
+})
+
+
 // API - Endpoint - Route
 server.get('/', (req,res)=> {
     res.json({type:'GET'})
