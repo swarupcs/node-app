@@ -23,18 +23,20 @@ server.use(express.static('public'));
 
 const auth = (req, res, next) => {
     // console.log(req.query);
-    if(req.body.password=='123') {
-        next();
-    } else{
-        res.sendStatus(401);
-    }
+    // if(req.body.password=='123') {
+    //     next();
+    // } else{
+    //     res.sendStatus(401);
+    // }
+    next();
 }
 
 // server.use(auth);
 
 
 // API - Endpoint - Route
-server.get('/', auth, (req,res)=> {
+server.get('/product/:id', auth, (req,res)=> {
+    console.log(req.params)
     res.json({type:'GET'})
 })
 server.post('/', auth, (req,res)=> {
